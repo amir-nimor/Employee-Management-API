@@ -21,4 +21,20 @@ public class EmploeesRepositoryImpl {
         }
         entityManager.remove(employee);
     }
+
+
+
+    @Transactional
+    public Employee update(Employee employee,Long id){
+        Employee employeeFind = entityManager.find(Employee.class,id);
+        if (employee==null){
+            throw new RepositoryException("your entity not founded");
+        }
+        employeeFind.setDepartment(employee.getDepartment());
+        employeeFind.setEmail(employee.getEmail());
+        employeeFind.setFirstName(employee.getFirstName());
+        employeeFind.setLastName(employee.getLastName());
+
+        return employeeFind;
+    }
 }

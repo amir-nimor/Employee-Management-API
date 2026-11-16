@@ -4,6 +4,7 @@ import ir.maktabsharif.dto.EmployeeDtoRequest;
 import ir.maktabsharif.dto.EmployeeDtoResponse;
 import ir.maktabsharif.exception.ServiceException;
 import ir.maktabsharif.service.EmployeesServiceImpl;
+import org.springframework.core.io.support.PropertiesLoaderSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +17,7 @@ import java.util.List;
 public class EmployeesController {
 
     private final EmployeesServiceImpl service;
+
 
     public EmployeesController(EmployeesServiceImpl service) {
         this.service = service;
@@ -102,6 +104,23 @@ public class EmployeesController {
             }
             return ResponseEntity.ok(employeeDtoResponseList);
         } catch (ServiceException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<EmployeeDtoResponse> update(@PathVariable("id")Long id,@RequestBody EmployeeDtoRequest employeeDtoRequest){
+        try {
+            if (employeeDtoRequest==null || id == null){
+                return ResponseEntity.badRequest().build();
+            }
+            EmployeeDtoResponse employeeDtoResponse = service.update(employeeDtoRequest,id);
+            if (employeeDtoResponse == null){
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(employeeDtoResponse);
+        }catch (ServiceException e) {
             return ResponseEntity.badRequest().build();
         }
     }

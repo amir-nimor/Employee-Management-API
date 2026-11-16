@@ -5,6 +5,7 @@ import ir.maktabsharif.command.RequestToDao;
 import ir.maktabsharif.dto.EmployeeDtoRequest;
 import ir.maktabsharif.dto.EmployeeDtoResponse;
 import ir.maktabsharif.exception.ServiceException;
+import ir.maktabsharif.model.Employee;
 import ir.maktabsharif.repository.EmploeesRepositoryImpl;
 import ir.maktabsharif.repository.EmployeeRepository;
 import ir.maktabsharif.util.Ruls;
@@ -98,6 +99,16 @@ public class EmployeesServiceImpl implements EmployeesService {
     public List<EmployeeDtoResponse> findByEmail(String email) {
         try {
             return Optional.ofNullable(employeeRepository.findByEmail(email).stream().map(e -> daoToResponse.convert(e)).toList()).orElse(null);
+        } catch (RuntimeException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public EmployeeDtoResponse update(EmployeeDtoRequest employeeDtoRequest, Long id) {
+        try {
+            Employee employee = requestToDao.convert(employeeDtoRequest);
+            return daoToResponse.convert(emploeesRepositoryimpl.update(employee,id));
         } catch (RuntimeException e) {
             throw new ServiceException(e.getMessage());
         }

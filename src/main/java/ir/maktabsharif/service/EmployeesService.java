@@ -23,6 +23,8 @@ public interface EmployeesService {
 
     List<EmployeeDtoResponse> findByEmail(String email);
 
+    EmployeeDtoResponse update(EmployeeDtoRequest employeeDtoRequest,Long id);
+
 
 
 
