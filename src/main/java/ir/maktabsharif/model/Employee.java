@@ -6,6 +6,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity
@@ -19,15 +20,15 @@ import lombok.*;
 @ToString
 public class Employee extends BaseModel<Long> {
 
-    @NotNull @NotBlank @NotEmpty
+    @NotNull @NotBlank @NotEmpty @Size(min = 2,max = 50)
     @Column(nullable = false,name = "first_name")
     private String firstName;
 
-    @NotNull @NotBlank @NotEmpty
+    @NotNull @NotBlank @NotEmpty  @Size(min = 2,max = 50)
     @Column(nullable = false,name = "last_name")
     private String lastName;
 
-    @NotNull @NotBlank @NotEmpty
+    @NotNull @NotBlank @NotEmpty  @Size(min = 2,max = 50)
     @Column(nullable = false)
     private String email;
 
